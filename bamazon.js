@@ -33,7 +33,8 @@ function customerInterface() {
     itemQuantity = result[0].stock_quantity;
     //console.log(itemQuantity);
     //console.log(answers.quantity);
-    }).then(
+    orderEntry();
+    })
 
     function orderEntry () {      
     if (answers.quantity > itemQuantity) {
@@ -51,16 +52,15 @@ function customerInterface() {
       mySqlServer.query(checkQuantity, function(err, result) {
         if (err) throw err;
         console.log("Your order of " + answers.quantity + " " + result[0].product_name + " has been received.");
-        
+        mySqlServer.end();
         });
       }
-    })
-    mySqlServer.end();
-  })};
-
+    }
+  }
+)};
 
 var mySqlServer = mysql.createConnection({
-    host: "localhost",
+  host: "localhost",
 	port: 3306,
 	user: "root",
 	password: "2003Sv650",
@@ -73,12 +73,5 @@ var mySqlServer = mysql.createConnection({
     if (error) throw error;
 
     console.table(results);
-    customerInterface();
-
-    
-  })
-    
-
-  
-   
- 
+    customerInterface(); 
+  }) 
